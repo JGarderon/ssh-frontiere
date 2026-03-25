@@ -1,0 +1,21 @@
+[global]
+log_file = "/tmp/ssh-frontiere-test-mask/commands.json"
+log_level = "info"
+default_timeout = 30
+default_level = "ops"
+mask_sensitive = true
+max_stdout_chars = 1024
+max_stderr_chars = 512
+max_output_chars = 2048
+
+[domains.test]
+description = "Test domain"
+
+[domains.test.actions.secret-cmd]
+description = "Command with sensitive arg"
+level = "ops"
+timeout = 10
+execute = "/bin/echo {token}"
+
+[domains.test.actions.secret-cmd.args]
+token = { type = "string", sensitive = true }

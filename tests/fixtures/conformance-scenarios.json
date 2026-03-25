@@ -1,0 +1,91 @@
+{
+  "_comment": "Scenarios de conformite — protocole v2 (ADR 0003 v2). JSON 5 champs (command, status_code, status_message, stdout, stderr).",
+  "_divergences": [
+    "Le bouchon bash ne masque pas les arguments sensibles (pas de SHA-256)",
+    "Le bouchon bash n'applique pas env_clear() + PATH safe",
+    "Le bouchon bash n'a pas de timeout SIGTERM/SIGKILL",
+    "Le bouchon bash n'a pas de troncature configurable",
+    "Le bouchon bash n'a pas de validation d'arguments enum",
+    "Le bouchon bash produit un logging JSON simplifie"
+  ],
+  "scenarios": [
+    {
+      "id": "authorized_command",
+      "description": "Commande autorisee — domaine + action valide (ADR 0011: stdout/stderr streames, null dans JSON)",
+      "level": "read",
+      "command": "test echo",
+      "expect": {
+        "exit_code": 0,
+        "status_code": 0,
+        "status_message_contains": "executed",
+        "stdout_is_null": true,
+        "stderr_is_null": true
+      }
+    },
+    {
+      "id": "unknown_action",
+      "description": "Action inconnue — rejetee",
+      "level": "ops",
+      "command": "test unknown-action",
+      "expect": {
+        "exit_code": 128,
+        "status_code": 128,
+        "status_message_contains": "rejected",
+        "stdout_is_null": true,
+        "stderr_is_null": true
+      }
+    },
+    {
+      "id": "insufficient_level",
+      "description": "Niveau insuffisant — ops requis, read accorde",
+      "level": "read",
+      "command": "test greet name=world",
+      "expect": {
+        "exit_code": 131,
+        "status_code": 131,
+        "status_message_contains": "rejected",
+        "stdout_is_null": true,
+        "stderr_is_null": true
+      }
+    },
+    {
+      "id": "extra_tokens_rejected",
+      "description": "Tokens excedentaires rejetes par la grammaire",
+      "level": "ops",
+      "command": "test echo extra1 extra2",
+      "expect": {
+        "exit_code": 128,
+        "status_code": 128,
+        "status_message_contains": "rejected",
+        "stdout_is_null": true,
+        "stderr_is_null": true
+      }
+    },
+    {
+      "id": "unknown_domain_rejected",
+      "description": "Domaine inconnu — rejete",
+      "level": "ops",
+      "command": "nonexistent action",
+      "expect": {
+        "exit_code": 128,
+        "status_code": 128,
+        "status_message_contains": "rejected",
+        "stdout_is_null": true,
+        "stderr_is_null": true
+      }
+    },
+    {
+      "id": "discovery_list",
+      "description": "Discovery list — liste des actions (JSON)",
+      "level": "ops",
+      "command": "list",
+      "expect": {
+        "exit_code": 0,
+        "status_code": 0,
+        "status_message_contains": "ok",
+        "stdout_is_null": false,
+        "stderr_is_null": true
+      }
+    }
+  ]
+}

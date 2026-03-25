@@ -1,0 +1,66 @@
+[package]
+name = "ssh-frontiere-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+
+[dependencies.ssh-frontiere]
+path = ".."
+
+# Inherit workspace lints but relax for fuzz harnesses
+[lints.clippy]
+unwrap_used = "allow"
+
+[profile.release]
+debug = 1
+
+[[bin]]
+name = "fuzz_sha256"
+path = "fuzz_targets/fuzz_sha256.rs"
+doc = false
+
+[[bin]]
+name = "fuzz_base64"
+path = "fuzz_targets/fuzz_base64.rs"
+doc = false
+
+[[bin]]
+name = "fuzz_hex_decode"
+path = "fuzz_targets/fuzz_hex_decode.rs"
+doc = false
+
+[[bin]]
+name = "fuzz_xor_encrypt"
+path = "fuzz_targets/fuzz_xor_encrypt.rs"
+doc = false
+
+[[bin]]
+name = "fuzz_parse_line"
+path = "fuzz_targets/fuzz_parse_line.rs"
+doc = false
+
+[[bin]]
+name = "fuzz_parse_command"
+path = "fuzz_targets/fuzz_parse_command.rs"
+doc = false
+
+[[bin]]
+name = "fuzz_read_body"
+path = "fuzz_targets/fuzz_read_body.rs"
+doc = false
+
+[[bin]]
+name = "fuzz_transpose_command"
+path = "fuzz_targets/fuzz_transpose_command.rs"
+doc = false
+
+[[bin]]
+name = "fuzz_config_toml"
+path = "fuzz_targets/fuzz_config_toml.rs"
+doc = false

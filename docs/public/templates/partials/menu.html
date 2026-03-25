@@ -1,0 +1,39 @@
+<nav class="main-menu" aria-label="Main Menu">
+    <a class="skip-to-content" href="#main">Skip to main content</a>
+    <button class="main-menu-dropdown-button" popovertarget="nav-menu">Menu</button>
+    <ul id="nav-menu" class="main-menu-items" aria-label="Site Navigation" popover>
+        {%- set menu_key = "main_menu_" ~ lang -%}
+        {%- if config.extra[menu_key] -%}
+            {%- set menu_items = config.extra[menu_key] -%}
+        {%- else -%}
+            {%- set menu_items = config.extra.main_menu -%}
+        {%- endif -%}
+        {%- for item in menu_items -%}
+        {%- if item.url is starting_with("http") -%}
+            {%- set url = item.url -%}
+        {%- else -%}
+            {%- set trailing_slash = item.trailing_slash | default(value=false) -%}
+            {%- set url = get_url(path=item.url, trailing_slash=trailing_slash, lang=lang) -%}
+        {%- endif %}
+        <li><a href="{{ url | safe }}" {%- if item.new_tab %} target="_blank" {%- endif -%}>{{ item.name }}</a></li>
+        {%- endfor %}
+    </ul>
+    {# --- Language selector --- #}
+    {%- if page.translations -%}
+        {%- set translations = page.translations -%}
+    {%- elif section.translations -%}
+        {%- set translations = section.translations -%}
+    {%- else -%}
+        {%- set translations = [] -%}
+    {%- endif -%}
+    {%- if translations | length > 0 %}
+    <div class="lang-selector" aria-label="Language selector">
+        <span class="lang-current">{{ lang | upper }}</span>
+        <ul class="lang-list">
+            {%- for t in translations %}
+            <li><a href="{{ t.permalink | safe }}" lang="{{ t.lang }}" hreflang="{{ t.lang }}">{{ t.lang | upper }}</a></li>
+            {%- endfor %}
+        </ul>
+    </div>
+    {%- endif %}
+</nav>

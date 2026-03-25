@@ -1,0 +1,96 @@
+:root {
+    --code-border: color-mix(in srgb, var(--text-color) 10%, transparent);
+}
+
+$header-padding-vertical: 6px;
+$header-border-thickness: 1px;
+$line-number-color: color-mix(in srgb, var(--text-color) 53%, transparent);
+
+.copy-button {
+    position: absolute;
+    z-index: 1;
+    top: $header-padding-vertical;
+    right: 10px;
+    width: 4.5rem;
+    padding: 3px 8px;
+    border: 1px solid color-mix(in srgb, var(--accent-color) 15%, transparent);
+    font-size: calc(var(--font-size) * 0.8);
+    font-weight: normal;
+    line-height: 1em;
+
+    @media print {
+        display: none;
+    }
+}
+
+pre.giallo:not(:has(code[data-lang="plain"])) {
+    display: block;
+    position: relative;
+    padding: 0;
+    overflow-y: hidden;
+
+    code[data-lang] {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        padding-bottom: 10px;
+        overflow-x: auto;
+        overscroll-behavior-x: none;
+
+        // Language header bar, driven by the data-lang attribute on <code>.
+        &::before {
+            content: attr(data-lang);
+            position: sticky;
+            left: 0;
+            width: 100%;
+            padding: $header-padding-vertical 10px;
+            border-bottom: $header-border-thickness solid var(--code-border);
+            margin-bottom: 10px;
+            color: $line-number-color;
+            font-size: calc(var(--font-size) * 0.8);
+            text-transform: uppercase;
+            line-height: 21px;
+        }
+
+        // Filename label, positioned in the header bar area.
+        &[data-name]::after {
+            content: attr(data-name);
+            position: absolute;
+            right: 0;
+            overflow: hidden;
+            max-width: 60%;
+            padding: $header-padding-vertical 10px;
+            color: $line-number-color;
+            font-size: calc(var(--font-size) * 0.8);
+            line-height: 21px;
+            text-overflow: ellipsis;
+        }
+
+        // Mandatory Giallo styling (https://www.getzola.org/documentation/content/syntax-highlighting/)
+        .giallo-l {
+            padding-inline: 10px;
+
+            // Monokai (and some other themes) emit `background-color` on
+            // whitespace-only spans. Strip it so spaces don't render as
+            // colored blocks.
+            span[style*="background-color"] {
+                background-color: unset !important;
+            }
+        }
+
+        .giallo-ln {
+            display: inline-block;
+            min-width: 2ch;
+            margin-inline-end: 20px;
+            color: $line-number-color;
+            text-align: end;
+            user-select: none;
+        }
+    }
+
+    &:has(.copy-button) code[data-name]::after {
+        @media screen {
+            right: calc(4.5rem + 10px);
+        }
+    }
+}

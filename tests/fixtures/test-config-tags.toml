@@ -1,0 +1,62 @@
+[global]
+log_file = "/tmp/ssh-frontiere-test-tags/commands.json"
+log_level = "info"
+default_timeout = 30
+default_level = "ops"
+mask_sensitive = false
+max_stdout_chars = 1024
+max_stderr_chars = 512
+max_output_chars = 2048
+
+# Domaine forgejo — actions taguees "forgejo"
+[domains.forgejo]
+description = "Forge Git"
+
+[domains.forgejo.actions.backup]
+description = "Backup forgejo"
+level = "ops"
+timeout = 10
+execute = "/bin/echo forgejo-backup"
+tags = ["forgejo"]
+
+[domains.forgejo.actions.deploy]
+description = "Deploy forgejo"
+level = "ops"
+timeout = 10
+execute = "/bin/echo forgejo-deploy"
+tags = ["forgejo"]
+
+# Domaine mastodon — actions taguees "mastodon"
+[domains.mastodon]
+description = "Mastodon"
+
+[domains.mastodon.actions.healthcheck]
+description = "Mastodon health"
+level = "read"
+timeout = 10
+execute = "/bin/echo mastodon-health"
+tags = ["mastodon"]
+
+# Domaine infra — actions sans tags (publiques)
+[domains.infra]
+description = "Infrastructure"
+
+[domains.infra.actions.status]
+description = "System status"
+level = "read"
+timeout = 10
+execute = "/bin/echo infra-status"
+
+# Auth tokens avec tags
+[auth]
+challenge_nonce = true
+
+[auth.tokens.runner-forge]
+secret = "b64:c2VjcmV0"
+level = "ops"
+tags = ["forgejo"]
+
+[auth.tokens.agent-mastodon]
+secret = "b64:c2VjcmV0Mg=="
+level = "ops"
+tags = ["mastodon"]

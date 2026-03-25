@@ -1,0 +1,2 @@
+#!/bin/sh
+printf '\x00\x01\x02\xff\xfe\xfd'

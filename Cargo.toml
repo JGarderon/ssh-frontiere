@@ -1,0 +1,49 @@
+[package]
+name = "ssh-frontiere"
+version = "3.1.0"
+edition = "2021"
+authors = ["Julien Garderon (Nothus, France)"]
+license = "EUPL-1.2"
+description = "Login shell SSH restreint — point d'entrée unique pour les connexions SSH entrantes"
+keywords = ["ssh", "security", "login-shell", "rbac", "whitelist"]
+categories = ["command-line-utilities", "authentication"]
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+
+[lints.rust]
+unsafe_code = "deny"
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+unwrap_used = "deny"
+todo = "warn"
+unimplemented = "warn"
+dbg_macro = "warn"
+# Pedantic overrides: allow patterns that are idiomatic in this codebase
+module_name_repetitions = "allow"
+must_use_candidate = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+cast_possible_truncation = "allow"
+cast_sign_loss = "allow"
+unreadable_literal = "allow"
+many_single_char_names = "allow"
+
+[dev-dependencies]
+proptest = "1"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+overflow-checks = true
+
+[profile.dev]
+opt-level = 0
+debug = true

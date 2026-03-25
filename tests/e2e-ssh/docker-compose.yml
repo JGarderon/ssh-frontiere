@@ -1,0 +1,36 @@
+services:
+  server:
+    build: ./server
+    volumes:
+      - ../../target/x86_64-unknown-linux-musl/release/ssh-frontiere:/usr/local/bin/ssh-frontiere:ro
+      - ./config.toml:/etc/ssh-frontiere/config.toml:ro
+      - ./config-noauth.toml:/etc/ssh-frontiere/config-noauth.toml:ro
+      - ./config-simple-auth.toml:/etc/ssh-frontiere/config-simple-auth.toml:ro
+      - ssh-logs:/var/log/ssh-frontiere
+      - ./.keys:/ssh-keys:ro
+    networks:
+      - ssh-e2e-net
+    healthcheck:
+      test: ["CMD", "ssh-keyscan", "localhost"]
+      interval: 2s
+      retries: 10
+
+  client:
+    build: ./client
+    volumes:
+      - ./scenarios:/tests:ro
+      - ssh-logs:/var/log/ssh-frontiere:ro
+      - ./.keys:/ssh-keys:ro
+      - ../../target/x86_64-unknown-linux-musl/release/proof:/usr/local/bin/ssh-frontiere-proof:ro
+    networks:
+      - ssh-e2e-net
+    depends_on:
+      server:
+        condition: service_healthy
+
+volumes:
+  ssh-logs:
+
+networks:
+  ssh-e2e-net:
+    internal: true

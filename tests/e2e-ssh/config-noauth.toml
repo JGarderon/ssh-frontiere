@@ -1,0 +1,66 @@
+[global]
+log_file = "/var/log/ssh-frontiere/commands.json"
+default_timeout = 10
+default_level = "read"
+mask_sensitive = true
+max_stdout_chars = 65536
+max_stderr_chars = 16384
+max_output_chars = 131072
+timeout_session = 30
+max_auth_failures = 3
+log_comments = true
+ban_command = ""
+
+[domains.test]
+description = "Domaine de test E2E"
+
+[domains.test.actions.echo]
+description = "Echo simple"
+level = "read"
+timeout = 5
+execute = "/bin/echo {domain}"
+
+[domains.test.actions.greet]
+description = "Salutation"
+level = "ops"
+timeout = 5
+execute = "/bin/echo hello {name}"
+
+[domains.test.actions.greet.args]
+name = { type = "enum", values = ["world", "e2e"] }
+
+[domains.test.actions.slow]
+description = "Commande lente (timeout)"
+level = "read"
+timeout = 1
+execute = "/bin/sleep 10"
+
+[domains.test.actions.fail]
+description = "Commande en echec"
+level = "read"
+timeout = 5
+execute = "/bin/false"
+
+[domains.test.actions.say]
+description = "Echo avec argument texte libre"
+level = "read"
+timeout = 5
+execute = "/bin/echo {message}"
+
+[domains.test.actions.say.args]
+message = { type = "string" }
+
+[domains.test.actions.big-output]
+description = "Sortie volumineuse"
+level = "read"
+timeout = 5
+execute = "/usr/bin/seq 1 10000"
+
+[domains.admin]
+description = "Actions admin"
+
+[domains.admin.actions.status]
+description = "Statut systeme"
+level = "admin"
+timeout = 5
+execute = "/bin/echo admin-ok"

@@ -1,0 +1,34 @@
+[global]
+log_file = "/tmp/ssh-frontiere-test-simple-auth/commands.json"
+log_level = "info"
+default_timeout = 30
+default_level = "ops"
+mask_sensitive = false
+max_stdout_chars = 1024
+max_stderr_chars = 512
+max_output_chars = 2048
+timeout_session = 30
+
+# Auth sans nonce (mode simple, defaut ADR 0010)
+# challenge_nonce absent = false par defaut
+[auth.tokens.runner]
+secret = "b64:c2VjcmV0"
+level = "ops"
+
+[domains.test]
+description = "Test domain"
+
+[domains.test.actions.echo]
+description = "Echo test"
+level = "read"
+timeout = 10
+execute = "/bin/echo {domain}"
+
+[domains.test.actions.greet]
+description = "Greet with name"
+level = "ops"
+timeout = 10
+execute = "/bin/echo hello {name}"
+
+[domains.test.actions.greet.args]
+name = { type = "enum", values = ["world", "user"] }

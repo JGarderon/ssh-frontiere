@@ -1,0 +1,27 @@
+{%- macro excerpt(page) -%}
+<article class="post">
+    {{ post_macros::header(page=page, heading="h2", is_excerpt=true) | indent | safe }}
+
+    {%- set permalink = page.permalink -%}
+
+    {%- if page.description %}
+    <p>{{ page.description | markdown(inline=true) | safe }}</p>
+    {%- elif page.summary %}
+    {%- set permalink = permalink ~ "#continue-reading" %}
+    {{ page.summary | safe }}
+    {%- endif %}
+    <a class="read-more" href="{{ permalink | safe }}" aria-label="Read more about {{ page.title }}">read more →</a>
+</article>
+{%- endmacro -%}
+
+{%- macro header(page, heading, is_excerpt=false) -%}
+<header>
+    <{{ heading }} class="post-title">
+        <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+    </{{ heading }}>
+</header>
+{%- endmacro -%}
+
+{%- macro date(value) -%}
+<time datetime="{{ value }}">{{ value | date(format="%Y.%m.%d") }}</time>
+{%- endmacro -%}

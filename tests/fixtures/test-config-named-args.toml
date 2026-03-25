@@ -1,0 +1,42 @@
+[global]
+log_file = "/tmp/ssh-frontiere-test-named-args/commands.json"
+log_level = "info"
+default_timeout = 30
+default_level = "ops"
+mask_sensitive = false
+max_stdout_chars = 1024
+max_stderr_chars = 512
+max_output_chars = 2048
+
+[domains.test]
+description = "Test domain named args"
+
+[domains.test.actions.deploy]
+description = "Deploy with tag"
+level = "read"
+timeout = 10
+execute = "/bin/echo deploy {tag} {env}"
+
+[domains.test.actions.deploy.args]
+tag = { type = "enum", values = ["latest", "stable", "canary"], default = "latest" }
+env = { type = "enum", values = ["prod", "staging"], default = "staging" }
+
+[domains.test.actions.greet]
+description = "Greet (mandatory arg)"
+level = "read"
+timeout = 10
+execute = "/bin/echo hello {name}"
+
+[domains.test.actions.greet.args]
+name = { type = "string" }
+
+[domains.test.actions.mixed]
+description = "Mixed mandatory and optional"
+level = "read"
+timeout = 10
+execute = "/bin/echo {action} {target} {force}"
+
+[domains.test.actions.mixed.args]
+action = { type = "string" }
+target = { type = "string" }
+force = { type = "enum", values = ["true", "false"], default = "false" }

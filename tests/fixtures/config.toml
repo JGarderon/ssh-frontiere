@@ -1,0 +1,60 @@
+[global]
+log_file = "/var/log/ssh-frontiere/commands.json"
+log_level = "info"
+default_timeout = 300
+default_level = "ops"
+mask_sensitive = false
+max_stdout_chars = 65536
+max_stderr_chars = 16384
+max_output_chars = 131072
+
+[domains.forgejo]
+description = "Forge Git infrastructure"
+
+[domains.forgejo.actions.backup-config]
+description = "Sauvegarde la configuration Forgejo"
+level = "ops"
+timeout = 600
+execute = "sudo /usr/local/bin/backup-config.sh {domain}"
+
+[domains.forgejo.actions.backup-full]
+description = "Sauvegarde complete (config + donnees)"
+level = "ops"
+timeout = 1800
+execute = "sudo /usr/local/bin/backup-full.sh {domain}"
+
+[domains.forgejo.actions.deploy]
+description = "Deploiement avec tag de version"
+level = "ops"
+timeout = 300
+execute = "sudo /usr/local/bin/deploy.sh {domain} {tag}"
+
+[domains.forgejo.actions.deploy.args]
+tag = { type = "enum", values = ["latest", "stable", "canary"] }
+
+[domains.forgejo.actions.api-call]
+description = "Appel API authentifie"
+level = "ops"
+timeout = 30
+execute = "sudo /usr/local/bin/api-call.sh {token}"
+
+[domains.forgejo.actions.api-call.args]
+token = { type = "string", sensitive = true }
+
+[domains.mastodon]
+description = "Instance Mastodon"
+
+[domains.mastodon.actions.backup-full]
+description = "Sauvegarde complete Mastodon"
+level = "ops"
+timeout = 1800
+execute = "sudo /usr/local/bin/backup-full.sh {domain}"
+
+[domains.infra]
+description = "Serveur hote"
+
+[domains.infra.actions.healthcheck]
+description = "Verification de l'etat des services"
+level = "read"
+timeout = 30
+execute = "sudo /usr/local/bin/healthcheck.sh"

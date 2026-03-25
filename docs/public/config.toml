@@ -1,0 +1,134 @@
+base_url = "https://pages.nothus.fr/ssh-frontiere"
+title = "SSH-Frontière"
+description = "Login shell SSH restreint en Rust — contrôle déclaratif des connexions entrantes"
+author = "Julien Garderon"
+default_language = "fr"
+theme = "terminus"
+generate_feeds = true
+compile_sass = true
+build_search_index = true
+
+[markdown]
+highlighting = { theme = "monokai" }
+github_alerts = true
+
+[slugify]
+paths = "safe"
+
+[extra]
+layout = "center"
+color_scheme = "nord"
+copy_button = true
+close_responsive_menu_on_resize = true
+favicon_emoji = "🔒"
+copyright = "© $YEAR $AUTHOR (julien.garderon@gmail.com) :: Licence [EUPL-1.2](https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12)"
+
+main_menu = [
+    { name = "Présentation", url = "presentation", trailing_slash = true },
+    { name = "Sécurité", url = "securite", trailing_slash = true },
+    { name = "Architecture", url = "architecture", trailing_slash = true },
+    { name = "Installation", url = "installation", trailing_slash = true },
+    { name = "Guides", url = "guides", trailing_slash = true },
+    { name = "Contribuer", url = "contribuer", trailing_slash = true },
+]
+
+main_menu_en = [
+    { name = "Overview", url = "presentation", trailing_slash = true },
+    { name = "Security", url = "securite", trailing_slash = true },
+    { name = "Architecture", url = "architecture", trailing_slash = true },
+    { name = "Installation", url = "installation", trailing_slash = true },
+    { name = "Guides", url = "guides", trailing_slash = true },
+    { name = "Contribute", url = "contribuer", trailing_slash = true },
+]
+
+main_menu_de = [
+    { name = "Vorstellung", url = "presentation", trailing_slash = true },
+    { name = "Sicherheit", url = "securite", trailing_slash = true },
+    { name = "Architektur", url = "architecture", trailing_slash = true },
+    { name = "Installation", url = "installation", trailing_slash = true },
+    { name = "Anleitungen", url = "guides", trailing_slash = true },
+    { name = "Mitwirken", url = "contribuer", trailing_slash = true },
+]
+
+main_menu_es = [
+    { name = "Presentación", url = "presentation", trailing_slash = true },
+    { name = "Seguridad", url = "securite", trailing_slash = true },
+    { name = "Arquitectura", url = "architecture", trailing_slash = true },
+    { name = "Instalación", url = "installation", trailing_slash = true },
+    { name = "Guías", url = "guides", trailing_slash = true },
+    { name = "Contribuir", url = "contribuer", trailing_slash = true },
+]
+
+main_menu_pt = [
+    { name = "Apresentação", url = "presentation", trailing_slash = true },
+    { name = "Segurança", url = "securite", trailing_slash = true },
+    { name = "Arquitetura", url = "architecture", trailing_slash = true },
+    { name = "Instalação", url = "installation", trailing_slash = true },
+    { name = "Guias", url = "guides", trailing_slash = true },
+    { name = "Contribuir", url = "contribuer", trailing_slash = true },
+]
+
+main_menu_ja = [
+    { name = "概要", url = "presentation", trailing_slash = true },
+    { name = "セキュリティ", url = "securite", trailing_slash = true },
+    { name = "アーキテクチャ", url = "architecture", trailing_slash = true },
+    { name = "インストール", url = "installation", trailing_slash = true },
+    { name = "ガイド", url = "guides", trailing_slash = true },
+    { name = "貢献", url = "contribuer", trailing_slash = true },
+]
+
+main_menu_ko = [
+    { name = "소개", url = "presentation", trailing_slash = true },
+    { name = "보안", url = "securite", trailing_slash = true },
+    { name = "아키텍처", url = "architecture", trailing_slash = true },
+    { name = "설치", url = "installation", trailing_slash = true },
+    { name = "가이드", url = "guides", trailing_slash = true },
+    { name = "기여", url = "contribuer", trailing_slash = true },
+]
+
+socials = [
+    { name = "github", url = "https://github.com/JGarderon/ssh-frontiere" },
+    { name = "email", url = "mailto:julien.garderon@gmail.com" },
+]
+
+[extra.content_security_policy]
+enable = true
+allowed_domains = []
+
+# --- Multilingual configuration ---
+
+[languages.en]
+title = "SSH-Frontière"
+description = "Restricted SSH login shell in Rust — declarative control of incoming connections"
+generate_feeds = true
+build_search_index = true
+
+[languages.de]
+title = "SSH-Frontière"
+description = "Eingeschränkte SSH-Login-Shell in Rust — deklarative Kontrolle eingehender Verbindungen"
+generate_feeds = true
+build_search_index = true
+
+[languages.es]
+title = "SSH-Frontière"
+description = "Shell de inicio SSH restringido en Rust — control declarativo de conexiones entrantes"
+generate_feeds = true
+build_search_index = true
+
+[languages.pt]
+title = "SSH-Frontière"
+description = "Shell de login SSH restrito em Rust — controlo declarativo das conexões de entrada"
+generate_feeds = true
+build_search_index = true
+
+[languages.ja]
+title = "SSH-Frontière"
+description = "Rust製の制限付きSSHログインシェル — 受信接続の宣言的制御"
+generate_feeds = true
+build_search_index = false
+
+[languages.ko]
+title = "SSH-Frontière"
+description = "Rust로 작성된 제한된 SSH 로그인 셸 — 수신 연결의 선언적 제어"
+generate_feeds = true
+build_search_index = false
